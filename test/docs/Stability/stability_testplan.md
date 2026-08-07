@@ -17,7 +17,7 @@ Verify that `onewifi_em_agent`, `onewifi_em_ctrl`, and `OneWifi` processes remai
 | Controller | EasyMesh Controller |
 | EM Agent 2 | EasyMesh Agent under memory/CPU monitoring |
 | EM Agent (all other agents) | EasyMesh Agent1 and  EasyMesh Agent3 |
-| Wi-Fi Client | At least Each client per EM devices |
+| Wi-Fi Client | At least 1 client per EM devices |
 | Orchestrator | Test Orchestrator and telemetry collector |
 | Network Topology | Hybrid topology with 1 Controller and 3 Extenders |
 
@@ -27,10 +27,10 @@ Verify that `onewifi_em_agent`, `onewifi_em_ctrl`, and `OneWifi` processes remai
 
 1. Controller and Extenders are onboarded successfully.
 2. EasyMesh and IEEE 1905 services are running.
-3. RDKBCLI is available and accessible
-4. No core dump file is generated under /tmp . if anything remove those.
-5. Verify the binary file size status of OneWifi, onewifi_em_agent, onewifi_em_ctrl and onewifi_em_cli: onewifi_em_cli size should be     
-   less than 7 MB. OneWifi, onewifi_em_agent and onewifi_em_ctrl size should each be less than 2 MB.
+3. `rdkbcli` is available and accessible.
+4. Ensure no core dump files exist under `/tmp`; if present, remove them before starting.
+5. Verify the binary sizes of `OneWifi`, `onewifi_em_agent`, `onewifi_em_ctrl`, and `onewifi_em_cli`: `onewifi_em_cli` should be < 7 MB;
+   `OneWifi`, `onewifi_em_agent`, and `onewifi_em_ctrl` should each be < 2 MB.
 
 ---
 
@@ -88,7 +88,7 @@ Verify that repeated fronthaul SSID and password changes (1000 changes total) ar
 | Controller | EasyMesh Controller |
 | EM Agent 2 | EasyMesh Agent under memory/CPU monitoring |
 | EM Agent (all other agents) | EasyMesh Agent1 and  EasyMesh Agent3 |
-| Wi-Fi Client | At least Each client per EM devices |
+| Wi-Fi Client | At least 1 client per EM devices |
 | Orchestrator | Test Orchestrator and telemetry collector |
 | Network Topology | Hybrid topology with 1 Controller and 3 Extenders |
 
@@ -98,10 +98,10 @@ Verify that repeated fronthaul SSID and password changes (1000 changes total) ar
 
 1. Controller and Extenders are onboarded successfully.
 2. EasyMesh and IEEE 1905 services are running.
-3. RDKBCLI is available and accessible
-4. No core dump file is generated under /tmp . if anything remove those.
-5. Verify the binary file size status of OneWifi, onewifi_em_agent, onewifi_em_ctrl and onewifi_em_cli: onewifi_em_cli size should be     
-   less than 7 MB. OneWifi, onewifi_em_agent and onewifi_em_ctrl size should each be less than 2 MB.
+3. `rdkbcli` is available and accessible.
+4. Ensure no core dump files exist under `/tmp`; if present, remove them before starting.
+5. Verify the binary sizes of `OneWifi`, `onewifi_em_agent`, `onewifi_em_ctrl`, and `onewifi_em_cli`: `onewifi_em_cli` should be < 7 MB;
+   `OneWifi`, `onewifi_em_agent`, and `onewifi_em_ctrl` should each be < 2 MB.
 
 ---
 
@@ -162,7 +162,7 @@ Verify that repeated channel changes across 2.4GHz, 5GHz and 6GHz radios (1000 c
 | Controller | EasyMesh Controller |
 | EM Agent 2 | EasyMesh Agent under memory/CPU monitoring |
 | EM Agent (all other agents) | EasyMesh Agent1 and  EasyMesh Agent3 |
-| Wi-Fi Client | At least Each client per EM devices |
+| Wi-Fi Client | At least 1 client per EM devices |
 | Orchestrator | Test Orchestrator and telemetry collector |
 | Network Topology | Hybrid topology with 1 Controller and 3 Extenders |
 
@@ -172,10 +172,10 @@ Verify that repeated channel changes across 2.4GHz, 5GHz and 6GHz radios (1000 c
 
 1. Controller and Extenders are onboarded successfully.
 2. EasyMesh and IEEE 1905 services are running.
-3. RDKBCLI is available and accessible
-4. No core dump file is generated under /tmp . if anything remove those.
-5. Verify the binary file size status of OneWifi, onewifi_em_agent, onewifi_em_ctrl and onewifi_em_cli: onewifi_em_cli size should be     
-   less than 7 MB. OneWifi, onewifi_em_agent and onewifi_em_ctrl size should each be less than 2 MB.
+3. `rdkbcli` is available and accessible.
+4. Ensure no core dump files exist under `/tmp`; if present, remove them before starting.
+5. Verify the binary sizes of `OneWifi`, `onewifi_em_agent`, `onewifi_em_ctrl`, and `onewifi_em_cli`: `onewifi_em_cli` should be < 7 MB;
+   `OneWifi`, `onewifi_em_agent`, and `onewifi_em_ctrl` should each be < 2 MB.
 
 ---
 
@@ -239,7 +239,7 @@ Verify that repeated security mode changes on the 5GHz fronthaul (WPA3 Personal 
 | Controller | EasyMesh Controller |
 | EM Agent 2 | EasyMesh Agent under memory/CPU monitoring |
 | EM Agent (all other agents) | EasyMesh Agent1 and  EasyMesh Agent3 |
-| Wi-Fi Client | At least Each client per EM devices |
+| Wi-Fi Client | At least 1 client per EM devices |
 | Orchestrator | Test Orchestrator and telemetry collector |
 | Network Topology | Hybrid topology with 1 Controller and 3 Extenders |
 
@@ -249,10 +249,10 @@ Verify that repeated security mode changes on the 5GHz fronthaul (WPA3 Personal 
 
 1. Controller and Extenders are onboarded successfully.
 2. EasyMesh and IEEE 1905 services are running.
-3. RDKBCLI is available and accessible
-4. No core dump file is generated under /tmp . if anything remove those.
-5. Verify the binary file size status of OneWifi, onewifi_em_agent, onewifi_em_ctrl and onewifi_em_cli: onewifi_em_cli size should be     
-   less than 7 MB. OneWifi, onewifi_em_agent and onewifi_em_ctrl size should each be less than 2 MB.
+3. `rdkbcli` is available and accessible.
+4. Ensure no core dump files exist under `/tmp`; if present, remove them before starting.
+5. Verify the binary sizes of `OneWifi`, `onewifi_em_agent`, `onewifi_em_ctrl`, and `onewifi_em_cli`: `onewifi_em_cli` should be < 7 MB;
+   `OneWifi`, `onewifi_em_agent`, and `onewifi_em_ctrl` should each be < 2 MB.
 
 ---
 
@@ -314,7 +314,7 @@ Verify that repeated disable/enable of the fronthaul network profile (1000 itera
 | Controller | EasyMesh Controller |
 | EM Agent 2 | EasyMesh Agent under memory/CPU monitoring |
 | EM Agent (all other agents) | EasyMesh Agent1 and  EasyMesh Agent3 |
-| Wi-Fi Client | At least Each client per EM devices |
+| Wi-Fi Client | At least 1 client per EM devices |
 | Orchestrator | Test Orchestrator and telemetry collector |
 | Network Topology | Hybrid topology with 1 Controller and 3 Extenders |
 
@@ -324,10 +324,10 @@ Verify that repeated disable/enable of the fronthaul network profile (1000 itera
 
 1. Controller and Extenders are onboarded successfully.
 2. EasyMesh and IEEE 1905 services are running.
-3. RDKBCLI is available and accessible
-4. No core dump file is generated under /tmp . if anything remove those.
-5. Verify the binary file size status of OneWifi, onewifi_em_agent, onewifi_em_ctrl and onewifi_em_cli: onewifi_em_cli size should be     
-   less than 7 MB. OneWifi, onewifi_em_agent and onewifi_em_ctrl size should each be less than 2 MB.
+3. `rdkbcli` is available and accessible.
+4. Ensure no core dump files exist under `/tmp`; if present, remove them before starting.
+5. Verify the binary sizes of `OneWifi`, `onewifi_em_agent`, `onewifi_em_ctrl`, and `onewifi_em_cli`: `onewifi_em_cli` should be < 7 MB;
+   `OneWifi`, `onewifi_em_agent`, and `onewifi_em_ctrl` should each be < 2 MB.
 
 ---
 
