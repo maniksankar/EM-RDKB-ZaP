@@ -1,4 +1,4 @@
-# Test Case 1: Verify Controller-Agent Connectivity at Scale
+# Test Case 1: EM_Scale_ControllerAgent_Connectivity
 
 ## Objective
 
@@ -9,6 +9,24 @@ Verify the expected Agent count is displayed in the topology.
 **Positive**
 
 ---
+## Pre-Requisites
+
+1. All Agents are successfully onboarded and visible in the EasyMesh topology.
+2. EasyMesh services running on both devices.
+3. All Extenders are visible in the Controller topology.
+4. DataElements is accessible via rbuscli.
+---
+
+## Test Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Expected Agent Count | Small: 2, Medium: 5, Large: 10 |
+| Expected Client Count | Small: 5, Medium: 25, Large: 50 |
+| Topology Source | Device.WiFi.DataElements.Network.Topology |
+| Verification Method | Topology baseline capture and periodic comparison |
+---
+
 
 # Test Environment
 
@@ -49,7 +67,7 @@ Verify the expected Agent count is displayed in the topology.
 | 4 | Monitor Controller logs for disconnect, reconnect, join, leave, re-onboarding, topology changes, and backhaul link events. | Monitor Agent logs for backhaul disconnects, reconnects, and re-onboarding events. | Monitor client connectivity status. | No unexpected topology events, Agent disconnects, or re-onboarding events are observed during the test duration. |
 | 5 | Capture the final topology information at the end of the test duration and compare it with the stored baseline topology. Verify Agent Count, Agent MAC Addresses, Backhaul Stations, Fronthaul Client Count, Client MAC Addresses, Parent-Child Relationships, and Connection Status. | Verify backhaul connectivity is maintained until the end of the test. | Verify all expected clients remain connected. | Final topology matches the baseline topology. No unexpected topology changes, Agent loss, Client loss, or connectivity issues are observed. |
 ---
-# Test Case 2: Verify Client Association at Scale
+# Test Case 2: EM_Scale_Client_Association
 
 ## Objective
 
@@ -58,7 +76,24 @@ Verify all clients remain associated to their respective Agents throughout the t
 ## Test Type
 
 **Positive**
+---
+## Pre-Requisites
 
+1. All Agents are successfully onboarded and visible in the EasyMesh topology.
+2. EasyMesh services running on both devices.
+3. All Extenders are visible in the Controller topology.
+4. DataElements is accessible via rbuscli.
+---
+
+## Test Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Expected Agent Count | Small: 2, Medium: 5, Large: 10 |
+| Expected Client Count | Small: 5, Medium: 25, Large: 50 |
+| Association Check Method | iw station dump + topology comparison |
+| Verification Method | Baseline capture and periodic association validation |
+| Pass Criteria | Agent and client association set remains unchanged throughout test duration |
 ---
 
 # Test Environment
@@ -95,12 +130,12 @@ Verify all clients remain associated to their respective Agents throughout the t
 |-------------|------------|---------|---------|-----------------|
 | 1 | Verify topology is formed and capture baseline topology information (Agent Count, Agent MAC Addresses, Backhaul Status, Client Count, and Client MAC Addresses). | Verify all Agents are operational and connected. | Connect the required number of Clients. | All Agents are connected and all Clients are associated successfully. |
 | 2 | Maintain the scale topology for the test duration. | Maintain backhaul connectivity on all Agents. | Generate normal traffic. | Network remains stable throughout the test duration. |
-| 3 | Periodically verify topology information and collect Controller-associated client details using `iw dev <controller_interface> station dump`. | Repeat the following on all Agents to collect associated client details:`for i in $(iw dev \| awk '/Interface/ {print $2}'); do``echo "=== $i ==="``iw dev $i station dump \| grep "^Station"``done` | Remain connected. | Agent count, Client count, and associated MAC addresses match the baseline. |
+| 3 | Periodically verify topology information and collect Controller-associated client details using `iw dev <controller_interface> station dump`. | Repeat the following on all Agents to collect associated client details from `iw dev <interface> station dump` | Remain connected. | Agent count, Client count, and associated MAC addresses match the baseline. |
 | 4 | Monitor topology and connectivity events. | Monitor all Agent logs for disconnect, reconnect, deauth, disassoc, and reassociation events. | N/A | No unexpected client or Agent connectivity events are observed. |
 | 5 | Capture final topology information and compare it with the baseline. | Re-run the client association commands on all Agents and compare results with the baseline. | N/A | Agent count, Client count, and associated MAC addresses remain unchanged. |
 
 ---
-# Test Case 3: Verify Client Traffic Throughput  at Scale
+# Test Case 3: EM_Scale_ClientTraffic_Throughput
 
 ## Objective
 
@@ -109,7 +144,24 @@ Verify that client traffic continues to flow normally through the Agents through
 ## Test Type
 
 **Positive**
+---
+## Pre-Requisites
 
+1. All Agents are successfully onboarded and visible in the EasyMesh topology.
+2. EasyMesh services running on both devices.
+3. All Extenders are visible in the Controller topology.
+4. DataElements is accessible via rbuscli.
+---
+
+## Test Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Expected Agent Count | Small: 2, Medium: 5, Large: 10 |
+| Expected Client Count | Small: 5, Medium: 25, Large: 50 |
+| Traffic Tool | iperf3 |
+| Traffic Profile | iperf3 client-to-agent traffic with periodic validation |
+| Pass Criteria | Traffic continues without interruption and topology/client counts remain consistent with baseline |
 ---
 
 # Test Environment
@@ -152,7 +204,7 @@ Verify that client traffic continues to flow normally through the Agents through
 | 5 | Capture final topology and throughput information and compare with the baseline. | Re-run client association checks on all Agents and collect throughput results. | Complete the final traffic run. | Agent count, Client count, connection status, and associated MAC addresses remain unchanged. |
 
 ---
-# Test Case 4: Verify CPU Utilization at Scale
+# Test Case 4: EM_Scale_CPU_Utilization
 
 ## Objective
 
@@ -161,7 +213,24 @@ Verify CPU utilization remains stable and within acceptable limits throughout th
 ## Test Type
 
 **Positive**
+---
+## Pre-Requisites
 
+1. All Agents are successfully onboarded and visible in the EasyMesh topology.
+2. EasyMesh services running on both devices.
+3. All Extenders are visible in the Controller topology.
+4. DataElements is accessible via rbuscli.
+---
+
+## Test Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| CPU Sample Interval | Every 30 minutes |
+| CPU Tools | top |
+| CPU Thresholds | CPU Idle > 20%, CPU Utilization < 80%, No sustained process > 50% |
+| Verification Method | Baseline, periodic trend monitoring, and final comparison |
+| Pass Criteria | CPU remains within thresholds with no abnormal sustained spikes |
 ---
 
 # Test Environment
@@ -197,13 +266,13 @@ Verify CPU utilization remains stable and within acceptable limits throughout th
 
 | Step Number | Controller | Agents | Clients | Expected Result |
 |-------------|------------|---------|---------|-----------------|
-| 1 | Verify all Agents are onboarded and the scale topology is formed. Record baseline CPU statistics on the Controller using `top -bn1 \| head -5`. | Record baseline CPU statistics on all Agents using `top -bn1 \| head -5`. | Connect the required number of Clients and start normal traffic generation. | Baseline CPU statistics are recorded on all devices. CPU Idle is greater than 20%. |
+| 1 | Verify all Agents are onboarded and the scale topology is formed. Record baseline CPU statistics on the Controller using `top`. | Record baseline CPU statistics on all Agents using `top`. | Connect the required number of Clients and start normal traffic generation. | Baseline CPU statistics are recorded on all devices. CPU Idle is greater than 20%. |
 | 2 | Establish and maintain the required scale topology throughout the test duration. | Verify all associated Clients remain connected. | Generate and maintain normal network traffic. | Scale topology is operational and all devices remain connected. |
-| 3 | Every 30 minutes during the test, execute `top -bn1 \| head -5` and record CPU statistics. | Every 30 minutes during the test, execute `top -bn1 \| head -5` and record CPU statistics on all Agents. | Continue traffic generation. | CPU Idle remains above 20%, CPU utilization remains below 80%, and no process continuously consumes more than 50% CPU. |
+| 3 | Every 30 minutes during the test, execute `top` and record CPU statistics. | Every 30 minutes during the test, execute `top` and record CPU statistics on all Agents. | Continue traffic generation. | CPU Idle remains above 20%, CPU utilization remains below 80%, and no process continuously consumes more than 50% CPU. |
 | 4 | Monitor CPU utilization trends and compare the recorded values against the baseline throughout the test duration. | Monitor CPU utilization trends on all Agents. | Continue normal traffic activity. | CPU utilization remains stable with no abnormal spikes or sustained high CPU usage. |
-| 5 | At the end of the test duration, collect final CPU statistics using `top -bn1 \| head -5` and compare them with the baseline. | Collect and compare final CPU statistics on all Agents. | N/A | No sustained process consumes more than 50% CPU, CPU Idle remains above 20%, and no abnormal increase in CPU utilization is observed. |
+| 5 | At the end of the test duration, collect final CPU statistics using `top` and compare them with the baseline. | Collect and compare final CPU statistics on all Agents. | N/A | No sustained process consumes more than 50% CPU, CPU Idle remains above 20%, and no abnormal increase in CPU utilization is observed. |
 ---
-# Test Case 5: Verify Memory Utilization at Scale
+# Test Case 5: EM_Scale_Memory_Utilization
 
 ## Objective
 
@@ -212,7 +281,24 @@ Verify memory utilization remains stable and no memory leak is observed during s
 ## Test Type
 
 **Positive**
+---
+## Pre-Requisites
 
+1. All Agents are successfully onboarded and visible in the EasyMesh topology.
+2. EasyMesh services running on both devices.
+3. All Extenders are visible in the Controller topology.
+4. DataElements is accessible via rbuscli.
+---
+
+## Test Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Memory Sample Interval | Every 30 minutes |
+| Memory Tools | free -m |
+| Memory Thresholds | Available Memory > 20% of total, Used Memory < 80% of total |
+| Verification Method | Baseline, periodic trend monitoring, and final comparison |
+| Pass Criteria | Memory usage remains stable with no monotonic increase indicating leak |
 ---
 
 # Test Environment
@@ -254,7 +340,7 @@ Verify memory utilization remains stable and no memory leak is observed during s
 | 4 | Monitor memory utilization trends throughout the test duration and compare against the baseline. | Monitor memory utilization trends on all Agents. | Continue traffic generation. | No abnormal memory growth or sudden drop in available memory is observed. |
 | 5 | At the end of the test duration, execute `free -m`, collect final memory statistics, and compare them with the baseline and periodic measurements. | Execute `free -m` on all Agents and compare final values with the recorded data. | N/A | Memory utilization remains stable with no monotonic increase in used memory, indicating no memory leak. |
 ---
-# Test Case 6: Verify Agent Recovery After Reboot Under Scale Conditions
+# Test Case 6: EM_Scale_AgentRecovery_AfterReboot
 
 ## Objective
 
@@ -263,7 +349,24 @@ Verify that an Agent successfully rejoins the EasyMesh topology and restores cli
 ## Test Type
 
 **Positive**
+---
+## Pre-Requisites
 
+1. All Agents are successfully onboarded and visible in the EasyMesh topology.
+2. EasyMesh services running on both devices.
+3. All Extenders are visible in the Controller topology.
+4. DataElements is accessible via rbuscli.
+---
+
+## Test Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Reboot Method | One Agent at a time |
+| Recovery Validation | Topology rejoin, backhaul connected state, client reachability |
+| Recovery Targets | Small: 30-60 sec, Medium: 1-2 min, Large: 2-5 min |
+| Verification Method | Baseline capture, timed recovery observation, and post-recovery comparison |
+| Pass Criteria | Agent rejoins within target window and baseline topology/client connectivity is restored |
 ---
 
 # Test Environment
@@ -299,13 +402,13 @@ Verify that an Agent successfully rejoins the EasyMesh topology and restores cli
 | Step Number | Controller | Agents | Clients | Expected Result |
 |-------------|-------------|---------|---------|-----------------|
 | 1 | Verify all Agents are onboarded and the topology is healthy using Data Elements topology information (`Device.WiFi.DataElements.Network.Topology`) or the topology UI. Capture baseline topology information (Agent Count, Agent MAC Addresses, Connection Status). | Verify all Agents are operational and backhaul links are connected using `iw dev <backhaul_intf> link`. | Connect Clients to the Agents under test. | Scale topology is established successfully and all nodes are reachable. |
-| 2 | Record baseline topology and connectivity information. | Verify client associations on all Agents using `sta_dump`. | Verify client connectivity using ping to the gateway/server. | All backhaul links are connected and all Clients are reachable. |
+| 2 | Record baseline topology and connectivity information. | Verify client associations on all Agents using `station_dump`. | Verify client connectivity using ping to the gateway/server. | All backhaul links are connected and all Clients are reachable. |
 | 3 | Select one Agent at a time and initiate a reboot. Repeat the procedure for each Agent in the topology. | Reboot the selected Agent using the `reboot` command. | Continuously run ping during the reboot and recovery period. | The rebooted Agent goes offline temporarily and client traffic is briefly interrupted. |
 | 4 | Monitor topology information and Agent recovery status using `Device.WiFi.DataElements.Network.Topology`. Record the time taken for the Agent to rejoin the topology. | Verify the rebooted Agent rejoins the Controller and the backhaul link returns to the Connected state using `iw dev <backhaul_intf> link`. Repeat for each rebooted Agent. | Continue ping verification during recovery. | The Agent successfully rejoins the EasyMesh topology and connectivity is restored automatically. Typical recovery time: Small Scale: 30-60 sec, Medium Scale: 1-2 min, Large Scale: 2-5 min. |
-| 5 | Verify the recovered Agent is present in the topology and that the expected Agent Count is maintained. | Verify backhaul status remains Connected and clients are associated using `iw dev <backhaul_intf> link` and `sta_dump`. | Verify client connectivity using ping and application traffic if applicable. | Agent Count matches the baseline, clients reconnect automatically, and normal network operation resumes. |
+| 5 | Verify the recovered Agent is present in the topology and that the expected Agent Count is maintained. | Verify backhaul status remains Connected and clients are associated using `iw dev <backhaul_intf> link` and `station_dump`. | Verify client connectivity using ping and application traffic if applicable. | Agent Count matches the baseline, clients reconnect automatically, and normal network operation resumes. |
 ---
 
-# Test Case 7: Verify Controller Recovery After Reboot Under Scale Conditions
+# Test Case 7: EM_Scale_ControllerRecovery_AfterReboot
 
 ## Objective
 
@@ -314,7 +417,24 @@ Verify that all Agents automatically reconnect and topology is restored after Co
 ## Test Type
 
 **Positive**
+---
+## Pre-Requisites
 
+1. All Agents are successfully onboarded and visible in the EasyMesh topology.
+2. EasyMesh services running on both devices.
+3. All Extenders are visible in the Controller topology.
+4. DataElements is accessible via rbuscli.
+---
+
+## Test Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Reboot Method | Controller reboot |
+| Recovery Validation | Controller service recovery, topology sync, agent/client reconnect |
+| Recovery Targets | Typical recovery time: 1-2 min |
+| Verification Method | Baseline capture, reboot timing, and post-recovery topology comparison |
+| Pass Criteria | All agents/clients reconnect and topology matches baseline without unexpected disconnects |
 ---
 
 # Test Environment
@@ -357,7 +477,7 @@ Verify that all Agents automatically reconnect and topology is restored after Co
 | 5 | Verify topology stability during the observation period and compare final topology information with the baseline. | Verify all Agents remain connected. | Verify Clients remain connected and traffic operates normally. | Agent Count, Client Count, and topology information match the baseline with no unexpected disconnects. |
 
 ---
-# Test Case 8:  Verify Configuration Propagation Stability at Scale
+# Test Case 8:  EM_Scale_ConfigurationPropagation_Stability
 
 ## Objective
 
@@ -366,7 +486,23 @@ Verify that configuration changes applied on the Controller are successfully pro
 ## Test Type
 
 **Positive**
+---
+## Pre-Requisites
 
+1. All Agents are successfully onboarded and visible in the EasyMesh topology.
+2. EasyMesh services running on both devices.
+3. All Extenders are visible in the Controller topology.
+4. DataElements is accessible via rbuscli.
+---
+
+## Test Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Change Scope | `Device.WiFi.DataElements.Network.SSID.{i}.SSID`, `Device.WiFi.DataElements.Network.PassPhrase`, `Device.WiFi.DataElements.Network.Device.{i}.Radio.{i}.CurrentOperatingClassProfile.{i}.Class`, `Channel`, `CountryCode`, `Enabled`, and `BSS.SSID`.  |
+| Validation Scope | Controller and all Agents parameter consistency + client connectivity |
+| Verification Method | Baseline capture, parameter update, propagation check, and stability observation |
+| Pass Criteria | Updated values are consistent across all Agents with no connectivity impact |
 ---
 
 # Test Environment
