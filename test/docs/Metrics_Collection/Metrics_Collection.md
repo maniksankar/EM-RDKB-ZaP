@@ -44,7 +44,7 @@ Verify that the Multi-AP Agent reports per-STA link metrics in Associated STA Li
 | Step Number | Controller | Extenders | Expected Result |
 |-------------|------------|----------|-----------------|
 | 1 | Start IEEE 1905 packet capture. | N/A | IEEE 1905 traffic capture begins successfully. |
-| 2 | Ensure a STA is associated with the Extender BSS by checking DataElements. | Associate a STA with the Extender BSS. | STA is successfully associated with the Extender and corresponding STA DataElements parameters are populated. |
+| 2 | Ensure a STA is associated with the Extender BSS by checking DataElements (Device.WiFi.DataElements.Network.Device.{i}.Radio.{i}.BSS.{i}.STA.{i}.*). | Associate a STA with the Extender BSS. | STA is successfully associated with the Extender and corresponding STA DataElements parameters are populated. |
 | 3 | Send an Associated STA Link Metrics Query for the associated STA. | Receive the Associated STA Link Metrics Query. | Associated STA Link Metrics Query is transmitted by the Controller and received by the Extender. |
 | 4 | N/A | Send an Associated STA Link Metrics Response for the queried STA. | Extender transmits an Associated STA Link Metrics Response for the queried STA. |
 | 5 | Read STA DataElements parameters using: `rbuscli get Device.WiFi.DataElements.Network.Device.{i}.Radio.{i}.BSS.{i}.STA.{i}.*` | Verify that the STA remains associated. | Per-STA DataElements parameters are populated for the associated STA. |
@@ -596,7 +596,7 @@ Verify that Backhaul Link Metrics are reported correctly for an active Ethernet 
 | 1 | Record baseline topology and Backhaul Media Type values from DataElements for all active backhaul links. | Start IEEE 1905 packet capture on each Extender. | Baseline topology is recorded with wired backhaul links and BackhaulMediaType values are available for all active links. |
 | 2 | N/A | Verify wired backhaul interface state on each Extender. | Ethernet backhaul links are operational and used as the active backhaul connections for all Extenders. |
 | 3 | Wait for two consecutive Link Metric Query and Link Metric Response exchanges for all Extenders. | N/A | Two valid Link Metric Response messages are observed for each active Ethernet backhaul neighbor. |
-| 4 | Stop IEEE 1905 packet capture collection. | Stop IEEE 1905 packet capture on each Extender. | Packet capture is stopped successfully after required exchanges are observed. |
+| 4 | N/A | Stop IEEE 1905 packet capture on each Extender. | Packet capture is stopped successfully after required exchanges are observed. |
 | 5 | Verify the captured Link Metric Response (message type 0x0006) and Link Metric TLVs. | N/A | Transmitter Link Metric TLV (type 0x09) and Receiver Link Metric TLV (type 0x0A) contain valid metrics for each active Ethernet backhaul link and report the appropriate Ethernet Media Type. |
 | 6 | Correlate neighbor identities and media type details from IEEE 1905 captures with topology and DataElements. | N/A | Link Metric TLVs map to all active Ethernet backhaul neighbors, report the correct Ethernet media type, and no wireless-only correlation is required. |
 
