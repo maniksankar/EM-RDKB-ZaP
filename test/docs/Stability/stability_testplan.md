@@ -98,7 +98,7 @@ Verify that repeated fronthaul SSID and password changes (1000 changes total) ar
 
 1. Controller and Extenders are onboarded successfully.
 2. EasyMesh and IEEE 1905 services are running.
-3. `rdkbcli` is available and accessible.
+3. `rdkbcli` is available and accessible or the  DE Device.WiFi.DataElements.Network.SetSSID() should be available
 4. Ensure no core dump files exist under `/tmp`; if present, remove them before starting.
 5. Verify the binary sizes of `OneWifi`, `onewifi_em_agent`, `onewifi_em_ctrl`, and `onewifi_em_cli`: `onewifi_em_cli` should be < 7 MB;
    `OneWifi`, `onewifi_em_agent`, and `onewifi_em_ctrl` should each be < 2 MB.
@@ -124,11 +124,11 @@ Verify that repeated fronthaul SSID and password changes (1000 changes total) ar
 |-------------|------------|------------|-----------------------------|---------------|-----------------|
 | 1 | Store the uptime. | Store the uptime. | N/A | N/A | Baseline uptime is recorded. |
 | 2 | Get PID of `onewifi_em_agent`, `onewifi_em_ctrl` and `OneWifi`. | Get PID of `onewifi_em_agent` and `OneWifi`. | N/A | N/A | PIDs are captured on Controller and EM Agent 2. |
-| 3 | Change fronthaul SSID and password from `rdkbcli`. | N/A | N/A | N/A | Fronthaul SSID and password are changed on the Controller. |
+| 3 | Change fronthaul SSID and password from `rdkbcli` or using DE Device.WiFi.DataElements.Network.SetSSID() | N/A | N/A | N/A | Fronthaul SSID and password are changed on the Controller. |
 | 4 | Verify that fronthaul SSID is updated: `iw dev <multi-link interface> info \| awk '/ssid/ {print $2}'`. | Verify that fronthaul SSID is updated: `iw dev <multi-link interface> info \| awk '/ssid/ {print $2}'`. | Verify that fronthaul SSID is updated: `iw dev <multi-link interface> info \| awk '/ssid/ {print $2}'`. | N/A | Updated SSID is reflected on Controller and all Agents. |
 | 5 | N/A | N/A | N/A | Connect clients using `nmcli` with updated SSID and password; check ping test to ensure connectivity. | Client connection and ping test should be successful. |
 | 6 | N/A | Verify backhaul status: `iw dev <backhaul interface> link` or `Device.WiFi.DataElements.Network.Device.{i}.BackhaulMediaType` (useful for eth backhaul). | Verify backhaul status: `iw dev <backhaul interface> link` or `Device.WiFi.DataElements.Network.Device.{i}.BackhaulMediaType` (useful for eth backhaul). | N/A | Backhaul should be connected. |
-| 7 | Change fronthaul SSID and password (using second set of values) from `rdkbcli`. | N/A | N/A | N/A | Fronthaul SSID and password are changed to the second set on the Controller. |
+| 7 | Change fronthaul SSID and password (using second set of values) from `rdkbcli`or using DE Device.WiFi.DataElements.Network.SetSSID() | N/A | N/A | N/A | Fronthaul SSID and password are changed to the second set on the Controller. |
 | 8 | Verify that fronthaul SSID is updated: `iw dev <multi-link interface> info \| awk '/ssid/ {print $2}'`. | N/A | N/A | N/A | Updated SSID is reflected on the Controller. |
 | 9 | N/A | Verify that fronthaul SSID is updated: `iw dev <multi-link interface> info \| awk '/ssid/ {print $2}'`. | Verify that fronthaul SSID is updated: `iw dev <multi-link interface> info \| awk '/ssid/ {print $2}'`. | N/A | Updated SSID is reflected on all Agents. |
 | 10 | N/A | N/A | N/A | Connect clients using `nmcli` with updated SSID and password. | Client connection should be successful. |
