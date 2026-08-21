@@ -29,6 +29,15 @@ class FeatureInterface(FeatureInterfaceModules):
         zi_logger.print_context()
         platform = self.db_obj.read_from_database(device, 'platform')
         self.ui_obj = self.get_ui_module_object(platform)
+        
+    def get_al_mac_address(self, device: str, method: str = 'cli') -> str:
+        """
+        To get AL MAC address of the device.
+        """
+        zi_logger.print_context()
+        iface_obj = self.get_feature_interface_module_object(method)
+        al_mac = iface_obj.get_al_mac_address(device)
+        return al_mac
 
     def set_ssid(self,
                  device: str,
