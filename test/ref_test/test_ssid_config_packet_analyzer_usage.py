@@ -46,6 +46,7 @@ def test_config_ssid_with_packet_capture(initialize):
     else:
         pytest.fail("SSID is not changed in DUT by checking with iw command")
 
+    initialize.stop_frame_capture("controller")
     pcap_remote_dir = os.path.join(pcap_remote_dir, pcap_file_name + '.pcapng')
     initialize.download_pcap("controller", pcap_remote_dir, pcap_local_dir)
     pcap_local_path = os.path.join(pcap_local_dir, pcap_file_name + '.pcapng')
@@ -53,26 +54,24 @@ def test_config_ssid_with_packet_capture(initialize):
     time.sleep(10)
     reassembled = reassemble_packets(pcap_local_path)
     message_type = MSG_TYPE_AP_AUTOCONFIGURATION_RENEW
-    print(f"checking for message of type {get_message_type_name(message_type)} in the captured packets")
-
+    
     controler_almac = initialize.get_al_mac_address("controller", 'cli')
     extender1_almac = initialize.get_al_mac_address("extender1", 'cli')
-    print(f"Controller AL MAC address : {controler_almac}")
-    print(f"Extender1 AL MAC address : {extender1_almac}")
+    zi_logger.log(f"Controller AL MAC address : {controler_almac}")
+    zi_logger.log(f"Extender1 AL MAC address : {extender1_almac}")
     #get the list of payloads of the message type from the captured packets
+    zi_logger.log(f"checking for message of type {get_message_type_name(message_type)} in the captured packets")
     payloads = check_message_presence(reassembled, message_type, src_mac=controler_almac, dst_mac=extender1_almac)
     if not payloads:
         pytest.fail(f"Message of type {get_message_type_name(message_type)} not found in the captured packets")
-        exit(1)
     else:
         zi_logger.print_success(f"Message of type {get_message_type_name(message_type)} found in the captured packets")
 
     tlv_type = TLV_TYPE_SUPPORTED_ROLE
-    print(f"checking for TLV of type {get_tlv_type_name(tlv_type)} in the captured message type {get_message_type_name(message_type)}")
+    zi_logger.log(f"checking for TLV of type {get_tlv_type_name(tlv_type)} in the captured message type {get_message_type_name(message_type)}")
     tlvs = check_tlv_presence(payloads[0], tlv_type)
     #if tlvs is empty then fail the test
     if not tlvs:
         pytest.fail(f" TLVs of type {get_tlv_type_name(tlv_type)} not found in the captured message type {get_message_type_name(message_type)}")
-        exit(1)
     else:
         zi_logger.print_success(f"Found {len(tlvs)} TLVs of type {get_tlv_type_name(tlv_type)} as expected")

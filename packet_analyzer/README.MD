@@ -1,6 +1,6 @@
 # Packet Analyzer Usage Guide
 
-This packet analyzer filters and analyzes messages exchanged in a Easymesh network.
+This packet analyzer filters and analyzes messages exchanged in an Easymesh network.
 
 # Packet Analyzer Usage
 

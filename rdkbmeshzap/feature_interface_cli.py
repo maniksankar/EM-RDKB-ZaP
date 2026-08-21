@@ -49,7 +49,7 @@ class FeatureInterfaceCLI(DatabaseModule,
         output, error = connection_obj.execute_command(command,
                                                    return_stderr=True)
         if error != '':
-            raise RuntimeError(f"Command execution failed : {command}")
+            raise RuntimeError(f"Command execution failed: {command}. stderr: {error.strip()}")
         return str(output).strip()
 
     def set_ssid(self,
