@@ -12,6 +12,35 @@ from packet_analyzer.message_verify import *
 from packet_analyzer.ieee1905_utils import *
 ```
 
+## Common Utility to Validate the Entire Capture File
+
+```python
+packet_analyzer(pcap_local_path, controller_almac, extender_almac)
+```
+
+Analyzes the complete PCAP capture and validates all IEEE 1905 messages exchanged between the specified Controller and Extender.
+
+The utility automatically determines the Multi-AP Profile by analyzing the IEEE 1905 message exchange between the specified Controller and Extender. Based on the detected profile, each message is validated against the expected specification requirements.
+
+The following validations are performed:
+
+- Mandatory TLV presence validation
+- Optional TLV presence validation
+- Unwanted or unsupported TLV presence validation
+- TLV length verification
+
+### Parameters
+
+- `pcap_local_path` : Path to the PCAP file.
+- `controller_almac` : AL MAC address of the Controller.
+- `extender_almac` : AL MAC address of the Extender device for which message validation is required.
+
+### Returns
+
+- `None`
+
+> **Note:** This utility is intended to serve as a common validation framework for EasyMesh test cases. In the future, it can be integrated across all tests and executed only when explicitly enabled by the user.
+
 ## Reassemble Packets
 
 ```python
