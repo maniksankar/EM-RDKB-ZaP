@@ -163,9 +163,9 @@ def parse_tlvs(payload):
         current_position += 3 + tlv_length
     return found_tlvs, tlv_lengths, tlv_values, found_end_of_message, None
 
-def extract_profile_type_from_autoconfig_response(filtered_packets):
+def extract_profile_type(filtered_packets):
     """
-    Extract profile type from autoconfiguration response message.
+    Extract profile type from 1905 messages.
     
     Args:
         filtered_packets: list of reassembled and filtered packets
@@ -186,7 +186,7 @@ def extract_profile_type_from_autoconfig_response(filtered_packets):
             message_presence = True
             found_tlvs, _, tlv_values, _, error = parse_tlvs(payload)
             if error or not found_tlvs:
-                return False, error or "Failed to parse TLVs from payload"
+                pytest.fail(error or "extract_profile_type: Failed to parse TLVs from payload", pytrace=False)
             for tlv_type, tlv_value in zip(found_tlvs, tlv_values):
                 if tlv_type == TLV_TYPE_MULTI_AP_PROFILE:
                     tlv_presence = True
@@ -260,7 +260,7 @@ def verify_no_additional_tlvs(message_type, mandatory_tlvs, optional_tlvs, paylo
     """
     found_tlvs, _, _, _, error = parse_tlvs(payload)
     if error or not found_tlvs:
-        return False, error or "Failed to parse TLVs from payload"
+        pytest.fail(error or "verify_no_additional_tlvs: Failed to parse TLVs from payload", pytrace=False)
     found_set = set(found_tlvs)
     mandatory_set = set(mandatory_tlvs)
     optional_set = set(optional_tlvs)    
@@ -359,7 +359,7 @@ def packet_analyzer(pcap_local_dir, ctrl_al_mac=None, extender_al_mac=None):
 
     if not filtered_packets:
         pytest.fail(f"No messages between controller {ctrl_al_mac} and agent {extender_al_mac} found in the capture file.", pytrace=False)
-    profiletype = extract_profile_type_from_autoconfig_response(filtered_packets)
+    profiletype = extract_profile_type(filtered_packets)
     tlv_data_from_config = get_tlv_from_config()
     #iterate through the captured packets and validate the messages
     for pkt in filtered_packets:
@@ -382,5 +382,3 @@ def packet_analyzer(pcap_local_dir, ctrl_al_mac=None, extender_al_mac=None):
             zi_logger.print_step(f"Validating {message_type_name} from captured packets")
             validate_1905_message(tlv_data_from_config, profiletype, message_type, payload, controller_or_agent)
             zi_logger.print_step(f"{get_message_type_name(message_type)} validation completed successfully")
-
-
