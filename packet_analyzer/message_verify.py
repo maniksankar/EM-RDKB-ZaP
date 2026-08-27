@@ -122,7 +122,6 @@ def get_message_type_name(message_type):
     }
     return message_names.get(message_type, f"Unknown message type: 0x{message_type:04X}")
 
-
 def get_tlv_type_name(tlv_type):
     """
     Convert hex TLV type to human-readable string
@@ -258,7 +257,6 @@ def get_tlv_type_name(tlv_type):
 # ---------------------------------------------------------
 # TLV length validation
 # ---------------------------------------------------------
-
 def validate_tlv_length(tlv_type, tlv_length):
     """
     Validate TLV length based on spec.
@@ -268,375 +266,252 @@ def validate_tlv_length(tlv_type, tlv_length):
     """
     if tlv_type == TLV_TYPE_AL_MAC_ADDRESS:
         return ("6", tlv_length == 6)
-
     if tlv_type == TLV_TYPE_MAC_ADDRESS:
         return ("6", tlv_length == 6)
-
     if tlv_type == TLV_TYPE_LINK_METRIC_QUERY:
         return ("8", tlv_length == 8)
-
     if tlv_type == TLV_TYPE_TX_LINK_METRIC:
         return ("41 or more", tlv_length >= 41)
-
     if tlv_type == TLV_TYPE_RX_LINK_METRIC:
         return ("35 or more", tlv_length >= 35)
-
     if tlv_type == TLV_TYPE_SEARCHED_ROLE:
         return ("1", tlv_length == 1)
-
     if tlv_type == TLV_TYPE_AUTOCONFIG_FREQ_BAND:
         return ("1", tlv_length == 1)
-
     if tlv_type == TLV_TYPE_SUPPORTED_ROLE:
         return ("1", tlv_length == 1)
-
     if tlv_type == TLV_TYPE_SUPPORTED_FREQ_BAND:
         return ("1", tlv_length == 1)
-
     if tlv_type == TLV_TYPE_MULTI_AP_PROFILE:
         return ("1", tlv_length == 1)
-
     if tlv_type == TLV_TYPE_DEVICE_INFORMATION:
         return ("1 or more", tlv_length >= 1)
-
     if tlv_type == TLV_TYPE_AP_OPERATIONAL_BSS:
         return ("1 or more", tlv_length >= 1)
-
     if tlv_type == TLV_TYPE_BSS_CONFIG_REPORT:
         return ("1 or more", tlv_length >= 1)
-
     if tlv_type == TLV_TYPE_WSC:
         return ("1 or more", tlv_length >= 1)
-
     if tlv_type == TLV_TYPE_AP_RADIO_BASIC_CAPABILITIES:
         return ("1 or more", tlv_length >= 1)
-
     if tlv_type == TLV_TYPE_PROFILE_2_AP_CAPABILITY:
         return ("1 or more", tlv_length >= 1)
-
     if tlv_type == TLV_TYPE_AP_RADIO_ADVANCED_CAPABILITIES:
         return ("1 or more", tlv_length >= 1)
-
     if tlv_type == TLV_TYPE_AP_RADIO_IDENTIFIER:
         return ("6", tlv_length == 6)
-
     if tlv_type == TLV_TYPE_END_OF_TLV:
         return ("0", tlv_length == 0)
-    
     if tlv_type == TLV_TYPE_AP_CAPABILITY:
         return ("1", tlv_length == 1)
-    
     if tlv_type == TLV_TYPE_CHANNEL_SCAN_CAPABILITIES:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_CHANNEL_SCAN_REQUEST:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_CAC_REQUEST:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_CAC_TERMINATION:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_CHANNEL_SCAN_RESULT:
-        return ("greater than 0", tlv_length > 0)
-    
+        return ("greater than 0", tlv_length > 0) 
     if tlv_type == TLV_TYPE_TIMESTAMP:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_MLD_STRUCTURE:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_CAC_CAPABILITIES:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_METRIC_COLLECTION_INTERVAL:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_1905_LAYER_SECURITY_CAPABILITY:
         return ("3", tlv_length == 3)
-    
     if tlv_type == TLV_TYPE_DEVICE_INVENTORY:
-        return ("greater than 0", tlv_length > 0)
-    
+        return ("greater than 0", tlv_length > 0)   
     if tlv_type == TLV_TYPE_AP_HT_CAPABILITIES:
         return ("7", tlv_length == 7)
-
     if tlv_type == TLV_TYPE_AP_VHT_CAPABILITIES:
         return ("12", tlv_length == 12)
-    
     if tlv_type == TLV_TYPE_AP_HE_CAPABILITIES:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_AP_WIFI_6_CAPABILITIES:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_SUPPORTED_SERVICE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_BACKHAUL_STA_RADIO_CAPABILITIES:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_DEFAULT_802_1Q_SETTINGS:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_TRAFFIC_SEPARATION_POLICY:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_STEERING_POLICY:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_METRIC_REPORTING_POLICY:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_CHANNEL_SCAN_REPORTING_POLICY:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_UNSUCCESSFUL_ASSOCIATION_POLICY:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_BACKHAUL_BSS_CONFIGURATION:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_DPP_CCE_INDICATION:
         return ("1", tlv_length == 1)
-    
     if tlv_type == TLV_TYPE_QOS_MANAGEMENT_POLICY:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_ERROR_CODE:
         return ("7", tlv_length == 7)
-
     if tlv_type == TLV_TYPE_CHANNEL_PREFERENCE:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_RADIO_OPERATION_RESTRICTION:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_CAC_COMPLETION_REPORT:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_CAC_STATUS_REPORT:
         return ("greater than 0", tlv_length > 0)
-    
     if tlv_type == TLV_TYPE_CHANNEL_SELECTION_RESPONSE:
         return ("7", tlv_length == 7)
-
     if tlv_type == TLV_TYPE_OPERATING_CHANNEL:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_CLIENT_INFO:
         return ("12", tlv_length == 12)
-
     if tlv_type == TLV_TYPE_CLIENT_CAPABILITY_REPORT:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_CLIENT_ASSOCIATION_EVENT:
         return ("13", tlv_length == 13)
-
     if tlv_type == TLV_TYPE_REASON_CODE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_AP_METRICS_QUERY:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_AP_METRICS:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_STA_MAC_ADDRESS_TYPE:
         return ("6", tlv_length == 6)
-
     if tlv_type == TLV_TYPE_RADIO_METRICS:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_AP_EXTENDED_METRICS:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_ASSOCIATED_STA_TRAFFIC_STATS:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_ASSOCIATED_STA_LINK_METRICS:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_UNASSOCIATED_STA_LINK_METRICS_QUERY:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_UNASSOCIATED_STA_LINK_METRICS_RESPONSE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_BEACON_METRICS_QUERY:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_BEACON_METRICS_RESPONSE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_STEERING_REQUEST:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_STEERING_BTM_REPORT:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_CLIENT_ASSOCIATION_CONTROL_REQUEST:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_BACKHAUL_STEERING_REQUEST:
         return ("14", tlv_length == 14)
-
     if tlv_type == TLV_TYPE_BACKHAUL_STEERING_RESPONSE:
         return ("13", tlv_length == 13)
-
     if tlv_type == TLV_TYPE_HIGHER_LAYER_DATA:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_PROFILE_2_STEERING_REQUEST:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_ASSOCIATED_STA_EXTENDED_LINK_METRICS:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_ASSOCIATED_WIFI_6_STA_STATUS_REPORT:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_AFFILIATED_STA_METRICS:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_AFFILIATED_AP_METRICS:
         return ("greater than 0", tlv_length > 0)
     if tlv_type == TLV_TYPE_DEVICE_BRIDGING_CAPABILITY:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_NON_1905_NEIGHBOR_DEVICE_LIST:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_1905_NEIGHBOR_DEVICE_LIST:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_SEARCHED_SERVICE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_ASSOCIATED_CLIENTS:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_TRANSMIT_POWER_LIMIT:
         return ("7", tlv_length == 7)
-
     if tlv_type == TLV_TYPE_BSSID:
         return ("6", tlv_length == 6)
-
     if tlv_type == TLV_TYPE_PROFILE_2_ERROR_CODE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_ASSOCIATION_STATUS_NOTIFICATION:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_SOURCE_INFO:
         return ("6", tlv_length == 6)
-
     if tlv_type == TLV_TYPE_STATUS_CODE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_TUNNELED_MESSAGE_TYPE:
         return ("1", tlv_length == 1)
-
     if tlv_type == TLV_TYPE_TUNNELED:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_SERVICE_PRIORITIZATION_RULE:
         return ("8", tlv_length == 8)
-
     if tlv_type == TLV_TYPE_DSCP_MAPPING_TABLE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_BSS_CONFIGURATION_REQUEST:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_BSS_CONFIGURATION_RESPONSE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_BSS_CONFIGURATION_REPORT:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_QOS_MANAGEMENT_DESCRIPTOR:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_1905_ENCAP_DPP:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_1905_ENCAP_EAPOL:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_DPP_BOOTSTRAPPING_URI_NOTIFICATION:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_AGENT_LIST:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_ANTICIPATED_CHANNEL_PREFERENCE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_ANTICIPATED_CHANNEL_USAGE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_RSN_DIAGNOSTIC_REPORT:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_DPP_MESSAGE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_DPP_CHIRP_VALUE:
         return ("1", tlv_length == 1)
-
     if tlv_type == TLV_TYPE_CONTROLLER_CAPABILITY:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_AP_RADIO_VBSS_CAPABILITIES:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_AKM_SUITE_CAPABILITIES:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_SPATIAL_REUSE_CONFIG_RESPONSE:
         return ("7", tlv_length == 7)
-
     if tlv_type == TLV_TYPE_SPATIAL_REUSE_REQUEST:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_SPATIAL_REUSE_REPORT:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_WIFI_7_AGENT_CAPABILITIES:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_AGENT_AP_MLD_CONFIGURATION:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_BACKHAUL_STA_MLD_CONFIGURATION:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_ASSOCIATED_STA_MLD_CONFIGURATION:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_TID_TO_LINK_MAPPING_POLICY:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_EHT_OPERATIONS:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_AVAILABLE_SPECTRUM_INQUIRY_REQUEST:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_AVAILABLE_SPECTRUM_INQUIRY_RESPONSE:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_RSN_PARAMETERS_CONFIGURATION:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_BSS_ADVANCED_CONFIGURATION:
         return ("greater than 0", tlv_length > 0)
-
     if tlv_type == TLV_TYPE_SUPPORTED_CIPHER_SUITES:
-        return ("greater than 0", tlv_length > 0)
-    
+        return ("greater than 0", tlv_length > 0)   
     return ("unknown", True)
 
 
