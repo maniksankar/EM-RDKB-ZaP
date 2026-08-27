@@ -59,6 +59,9 @@ def test_config_ssid_with_packet_capture(initialize):
     extender1_almac = initialize.get_al_mac_address("extender1", 'cli')
     zi_logger.log(f"Controller AL MAC address : {controler_almac}")
     zi_logger.log(f"Extender1 AL MAC address : {extender1_almac}")
+    #common packet analyzer for completed message type and TLV type check
+    #TODO: run the packet_analyzer method only if user wants
+    packet_analyzer(pcap_local_path, controler_almac, extender1_almac)
     #get the list of payloads of the message type from the captured packets
     zi_logger.log(f"checking for message of type {get_message_type_name(message_type)} in the captured packets")
     payloads = check_message_presence(reassembled, message_type, src_mac=controler_almac, dst_mac=extender1_almac)
