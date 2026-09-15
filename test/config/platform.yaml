@@ -107,6 +107,7 @@ controller:
     security_wpa3_personal: WPA3-Personal
     passphrase_1: CHANGEME
     passphrase_2: CHANGEME1
+    common_protocol_validation: True
 
 extender1:
     bridge_iface: 'brlan0'

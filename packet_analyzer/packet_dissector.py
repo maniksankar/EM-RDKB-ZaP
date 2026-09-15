@@ -382,3 +382,9 @@ def packet_analyzer(pcap_local_dir, ctrl_al_mac=None, extender_al_mac=None):
             zi_logger.print_step(f"Validating {message_type_name} from captured packets")
             validate_1905_message(tlv_data_from_config, profiletype, message_type, payload, controller_or_agent)
             zi_logger.print_step(f"{get_message_type_name(message_type)} validation completed successfully")
+
+def common_protocol_validation(pcap_file):
+    print(f"Executing COMMON PROTOCOL validation : {pcap_file}")
+ 
+def analyse_ssid_packets(pcap_file):
+    print(f"Executing PROTOCOL SPECIFIC validation - analyse_ssid : {pcap_file}")
