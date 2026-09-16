@@ -22,6 +22,7 @@ from zaero.utils import zi_logger
 from packet_analyzer.packet_dissector import *
 from packet_analyzer.message_verify import *
 from packet_analyzer.ieee1905_utils import *
+from packet_analyzer.protocol_validation import *
 
 
 def test_config_ssid(initialize,protocol_validation,request):

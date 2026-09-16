@@ -23,6 +23,7 @@ from pathlib import Path
 from packet_analyzer.packet_dissector import *
 from packet_analyzer.message_verify import *
 from packet_analyzer.ieee1905_utils import *
+from packet_analyzer.protocol_validation import *
 
 @pytest.fixture(scope='session', autouse=True)
 def initialize():
@@ -60,10 +61,6 @@ def test_setup(initialize):
     yield initialize
     initialize.ui_close_page("controller")
     initialize.ui_close_context("controller")
-    try:
-        initialize.stop_frame_capture("controller")
-    except Exception as err:
-        zi_logger.log(f"stop_frame_capture failed during teardown: {err}")
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_setup(item):
@@ -150,7 +147,7 @@ def protocol_validation(request,initialize):
     zi_logger.print_step("Download Captured pcap file from DUT to local machine")
     initialize.download_captured_pcap("controller", f"{request.node.name}.pcap")
     initialize.delete_captured_pcap("controller", f"{request.node.name}.pcap")
-    CPV = initialize.read_from_database("controller", "common_protocol_validation")
+    CPV = initialize.read_from_database("protocol", "common_protocol_validation")
     if CPV:
         zi_logger.print_step("========== Start Common Protocol Validation ==========")
         try:
